@@ -1,0 +1,73 @@
+# 检查配置文件变动的时间间隔
+refresh_rate: 30 seconds
+# appender 负责将日志收集到控制台或文件, 可配置多个
+appenders:
+  stdout:
+    # 控制台输出
+    kind: console
+    encoder:
+      # 格式可配置，具体格式详见：
+      # https://docs.rs/log4rs/1.0.0/log4rs/encode/pattern/index.html
+      pattern: "{d} - {m}{n}"
+
+  file:
+    # 输出到文件
+    kind: file
+    path: logs/log_init.log_init
+    append: true
+    encoder:
+      pattern: "{d} - {m}{n}"
+
+  rolling_file:
+    # 输出到滚动文件
+    kind: rolling_file
+    # 日志路径
+    path: logs/log_init.log_init
+    # 追加模式, 即每次在已有文件末尾添加日志, 默认为 true
+    append: true
+    encoder:
+      pattern: "{d} - {m}{n}"
+    policy:
+      kind: compound
+      # 触发器
+      trigger:
+        kind: size
+        limit: 10 mb
+      # 分割策略
+      # roller:
+      #   # 删除
+      #   kind: delete
+      roller:
+        # 固定窗口
+        # 每次都往test.log中写入文件，test.log文件达到触发策略时，分割文件后移一位。
+        # 即触发时，创建test.1.log文件，原test.1.log文件变为test.2.log文件，依次顺延，但只保留设置的日志数量，多余的删除。
+        kind: fixed_window
+        # 分割文件名称
+        pattern: logs/log_init.{}.log_init
+        # 从1开始
+        base: 1
+        # 保留五个日志
+        count: 5
+
+# 对全局 log_init 进行配置
+root:
+  # 配置输出的日志级别
+  # trace < debug < info < warn < error
+  level: trace
+  # 配置输出appender
+  appenders:
+    - stdout
+    # rolling_file和file选一个即可
+    - rolling_file
+
+# 对特定工程进行配置，可选
+loggers:
+  app::backend::db:
+    level: info
+
+  app::requests:
+    level: info
+    appenders:
+      - stdout
+    # 不继承全局配置的appenders，不设置时会使用全局的appenders+自己的appenders
+    additive: false

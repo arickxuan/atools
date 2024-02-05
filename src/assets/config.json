@@ -1,0 +1,38 @@
+
+{
+    "pic": {
+        "alist-tool": {
+            "url": "http://pan.arick.top",
+            "paramName": "file",
+            "alistUsername": "admin",
+            "customHeader": null,
+            "customBody": null,
+            "_configName": "Default",
+            "_id": "df918084-2ec4-4db6-8275-9db062d441eb",
+            "_createdAt": 1706306509065,
+            "_updatedAt": 1706343233045,
+            "alistPassword": "Aq123456",
+            "alistPath": "/img/",
+            "tokenDate": 1706349387146,
+            "configToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicHdkX3RzIjoxNzA2MDgwMzg3LCJleHAiOjE3MDY1MjIxODcsIm5iZiI6MTcwNjM0OTM4NywiaWF0IjoxNzA2MzQ5Mzg3fQ.X6nhy3pZC0crUix4IQvcxVyZgSgQE1jxjsGXmoZ3rOQ",
+            "fileRename": false
+        },
+        "current": "alist-tool",
+        "uploader": "alist-tool",
+        "list": [
+            {
+                "type": "alist-tool",
+                "name": "",
+                "visible": true
+            },
+            {
+                "type": "tcyun",
+                "name": "腾讯云COS",
+                "visible": false
+            }
+        ],
+        "settings": {
+            "proxy": "http://127.0.0.1:7890"
+        }
+    }
+}
