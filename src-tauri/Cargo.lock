@@ -79,7 +79,7 @@ version = "3.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "aafb29b107435aa276664c1db8954ac27a6e105cdad3c88287a199eb0e313c08"
 dependencies = [
- "clipboard-win 4.5.0",
+ "clipboard-win",
  "core-graphics 0.22.3",
  "image",
  "log",
@@ -311,16 +311,17 @@ version = "0.0.1"
 dependencies = [
  "anyhow",
  "auto-launch",
- "clipboard-ext",
  "log",
  "log4rs",
  "macos-accessibility-client",
+ "open 5.0.1",
  "sdl2",
  "serde",
  "serde_json",
  "tauri",
  "tauri-build",
  "tauri-plugin-clipboard",
+ "tauri-plugin-context-menu",
  "tauri-plugin-log",
  "tauri-plugin-single-instance",
  "tokio",
@@ -655,37 +656,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "clipboard"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "25a904646c0340239dcf7c51677b33928bf24fdf424b79a57909c0109075b2e7"
-dependencies = [
- "clipboard-win 2.2.0",
- "objc",
- "objc-foundation",
- "objc_id",
- "x11-clipboard 0.3.3",
-]
-
-[[package]]
-name = "clipboard-ext"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ac0b9a9fdf4e6100bfcdc6587c9c26a6a1d1d8247e74684c18a113d635d3dc78"
-dependencies = [
- "clipboard",
- "libc",
- "which",
- "x11-clipboard 0.3.3",
-]
-
-[[package]]
 name = "clipboard-files"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2bc2120eaf094b70a9c58bd1f8bb908cb74fbfe0c9793314567f7f8cea0be383"
 dependencies = [
- "clipboard-win 4.5.0",
+ "clipboard-win",
  "gtk",
  "objc",
  "objc-foundation",
@@ -704,16 +680,7 @@ dependencies = [
  "objc_id",
  "winapi",
  "windows-win",
- "x11-clipboard 0.5.3",
-]
-
-[[package]]
-name = "clipboard-win"
-version = "2.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e3a093d6fed558e5fe24c3dfc85a68bb68f1c824f440d3ba5aca189e2998786b"
-dependencies = [
- "winapi",
+ "x11-clipboard",
 ]
 
 [[package]]
@@ -1260,15 +1227,6 @@ dependencies = [
  "rayon-core",
  "smallvec",
  "zune-inflate",
-]
-
-[[package]]
-name = "failure"
-version = "0.1.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d32e9bd16cc02eae7db7ef620b392808b89f6a5e16bb3497d159c6b92a0f4f86"
-dependencies = [
- "backtrace",
 ]
 
 [[package]]
@@ -2152,6 +2110,25 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8f518f335dce6725a761382244631d86cf0ccb2863413590b31338feb467f9c3"
 
 [[package]]
+name = "is-docker"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "928bae27f42bc99b60d9ac7334e3a21d10ad8f1835a4e12ec3ec0464765ed1b3"
+dependencies = [
+ "once_cell",
+]
+
+[[package]]
+name = "is-wsl"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "173609498df190136aa7dea1a91db051746d339e18476eed5ca40521f02d7aa5"
+dependencies = [
+ "is-docker",
+ "once_cell",
+]
+
+[[package]]
 name = "itoa"
 version = "0.4.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2738,6 +2715,17 @@ checksum = "2078c0039e6a54a0c42c28faa984e115fb4c2d5bf2208f77d1961002df8576f8"
 dependencies = [
  "pathdiff",
  "windows-sys 0.42.0",
+]
+
+[[package]]
+name = "open"
+version = "5.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "90878fb664448b54c4e592455ad02831e23a3f7e157374a8b95654731aac7349"
+dependencies = [
+ "is-wsl",
+ "libc",
+ "pathdiff",
 ]
 
 [[package]]
@@ -4268,7 +4256,7 @@ dependencies = [
  "notify-rust",
  "objc",
  "once_cell",
- "open",
+ "open 3.2.0",
  "os_info",
  "os_pipe",
  "percent-encoding",
@@ -4374,6 +4362,26 @@ dependencies = [
  "tauri",
  "tempfile",
  "thiserror",
+]
+
+[[package]]
+name = "tauri-plugin-context-menu"
+version = "0.7.0"
+source = "git+https://github.com/c2r0b/tauri-plugin-context-menu?branch=main#0845b1564806c5885d8d915b2ad7ac86c16f634d"
+dependencies = [
+ "cocoa 0.24.1",
+ "dispatch",
+ "gdk",
+ "glib",
+ "gtk",
+ "image",
+ "lazy_static",
+ "libc",
+ "objc",
+ "serde",
+ "tauri",
+ "time",
+ "winapi",
 ]
 
 [[package]]
@@ -5203,16 +5211,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "53a85b86a771b1c87058196170769dd264f66c0782acf1ae6cc51bfd64b39082"
 
 [[package]]
-name = "which"
-version = "3.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d011071ae14a2f6671d0b74080ae0cd8ebf3a6f8c9589a2cd45f23126fe29724"
-dependencies = [
- "failure",
- "libc",
-]
-
-[[package]]
 name = "winapi"
 version = "0.3.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5758,15 +5756,6 @@ dependencies = [
 
 [[package]]
 name = "x11-clipboard"
-version = "0.3.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "89bd49c06c9eb5d98e6ba6536cf64ac9f7ee3a009b2f53996d405b3944f6bcea"
-dependencies = [
- "xcb 0.8.2",
-]
-
-[[package]]
-name = "x11-clipboard"
 version = "0.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "473068b7b80ac86a18328824f1054e5e007898c47b5bbc281bd7abe32bc3653c"
@@ -5833,16 +5822,6 @@ dependencies = [
  "thiserror",
  "windows 0.52.0",
  "xcb 1.3.0",
-]
-
-[[package]]
-name = "xcb"
-version = "0.8.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5e917a3f24142e9ff8be2414e36c649d47d6cc2ba81f16201cdef96e533e02de"
-dependencies = [
- "libc",
- "log",
 ]
 
 [[package]]

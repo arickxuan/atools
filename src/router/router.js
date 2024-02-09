@@ -7,6 +7,7 @@ import Settings from "../views/Settings.vue";
 import Temp from "../views/Temp.vue";
 import About from "../views/About.vue";
 import Upload from "../views/Upload.vue";
+import BookList from "../views/BookList.vue";
 // 2. 定义一些路由
 // 每个路由都需要映射到一个组件。
 // 我们后面再讨论嵌套路由。
@@ -18,6 +19,7 @@ const routes = [
   { path: "/temp", component: Temp },
   { path: "/upload", component: Upload },
   { path: "/about", component: About },
+  { path: "/book", component: BookList },
 ];
 
 // 3. 创建路由实例并传递 `routes` 配置

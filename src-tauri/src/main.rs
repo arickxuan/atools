@@ -6,11 +6,10 @@ extern crate log;
 extern crate log4rs;
 
 use std::env;
-use std::path::PathBuf;
 use std::string::String;
+
 // use log_init::{info}; //trace, warn
-use tauri::Manager;
-use tauri::Window;
+use tauri::{Manager, Window};
 use tauri_plugin_log;
 use tauri_plugin_log::LogTarget;
 use tokio;
@@ -40,6 +39,7 @@ mod aria;
 mod clipboard;
 mod dir;
 mod fs;
+mod helper;
 mod log_init;
 mod tray;
 
@@ -52,7 +52,7 @@ async fn print_tools() {
     }
 }
 #[tauri::command]
-fn log_info(str: String) {
+async fn log_info(str: String) {
     // trace!("Commencing yak shaving");
 
     warn!("web log_init: {}", str);
@@ -66,8 +66,12 @@ fn log_info(str: String) {
     print!("Got value: {}", dir);
     let home = env::var("HOME");
     if let Ok(value) = home {
-        println!("Got value: {}", value);
+        println!("Got home value: {}", value);
     }
+    std::thread::spawn(move || loop {
+        log::info!("testtt");
+        // dir::test();
+    });
 }
 // the payload type must implement `Serialize` and `Clone`.
 #[derive(Clone, serde::Serialize)]
@@ -103,6 +107,7 @@ async fn main() {
                 .targets([LogTarget::LogDir, LogTarget::Stdout, LogTarget::Webview])
                 .build(),
         )
+        .plugin(tauri_plugin_clipboard::init())
         .plugin(tauri_plugin_single_instance::init(|app, argv, cwd| {
             println!("{}, {argv:?}, {cwd}", app.package_info().name);
 
@@ -116,13 +121,14 @@ async fn main() {
             // )
             // .build()?;
 
-            // listen to the `event-name` (emitted on any window)
-            let id = app.listen_global("event-name", |event| {
-                println!("got event-name with payload {:?}", event.payload());
+            let main_window = app.get_window("main").unwrap();
+            let id = main_window.listen("plugin:clipboard://clipboard-monitor/update", |event| {
+                // clipboard::listen_clipboard(&app.handle());
+                // println!("got global event-name with payload {:?}", event.payload());
             });
             // unlisten to the event using the `id` returned on the `listen_global` function
             // a `once_global` API is also exposed on the `App` struct
-            app.unlisten(id);
+            // app.unlisten(id);
 
             let main_window = app.get_window("main").unwrap();
             main_window.show();
@@ -135,24 +141,43 @@ async fn main() {
             app.unlisten(id);
             let handle = app.handle();
 
-            let res = dir::app_resources_dir(app.package_info());
-            if let Ok(res) = res {
-                println!("res: {res:?}");
-                let str = res.into_os_string().into_string().unwrap();
-                aria::run_aria(&str);
-            }
+            // let res = dir::app_resources_dir(app.package_info());
+            // if let Ok(res) = res {
+            //     println!("res: {res:?}");
+            //     let str = res.into_os_string().into_string().unwrap();
+            //     aria::run_aria(&str);
+            // }
 
-            std::thread::spawn(move || {
-                // let local_window = tauri::WindowBuilder::new(
-                //     &handle,
-                //     "settings",
-                //     tauri::WindowUrl::App("/settings".into()),
-                // )
-                // .build()
-                // .expect("msg2");
-                // let _ = local_window.set_title("ok2");
-                // local_window.show();
+            let aria_path = app
+                .path_resolver()
+                .resolve_resource("assets/")
+                .unwrap()
+                .to_string_lossy()
+                .to_string();
+
+            log::info!("aria_path: {}", aria_path);
+            tauri::async_runtime::spawn(async move {
+                dir::run_shell("aria2c", "--conf-path", &aria_path);
             });
+
+            // tauri::async_runtime::spawn(async move {
+            //     let cmd = format!("{}", aria_path) + "/aria2c";
+            //     let args = format!(
+            //         "--conf-path={}/aria2.conf --log=~/.atoolsplugin/aria.log",
+            //         aria_path
+            //     );
+            //     let (mut rx, _child) = Command::new(cmd)
+            //         .args(&[args])
+            //         .spawn()
+            //         .expect("Failed to spawn node");
+            //     #[allow(clippy::collapsible_match)]
+            //     while let Some(event) = rx.recv().await {
+            //         if let CommandEvent::Stdout(line) = event {
+            //             log::info!("aria:{}", line);
+            //         }
+            //     }
+            // });
+
             clipboard::start_clipboard_monitor(app.handle());
             Ok(())
         })
@@ -169,14 +194,6 @@ async fn main() {
         // .run(context)
         .build(context)
         .expect("error while running tauri application");
-
-    let local_window =
-        tauri::WindowBuilder::new(&app, "aria", tauri::WindowUrl::App("aria.html".into()))
-            .build()
-            .expect("msg");
-    let _ = local_window.set_title("aria");
-    local_window.show().expect("msg");
-    // local_window.hide();
 
     app.run(|_app_handle, event| match event {
         tauri::RunEvent::ExitRequested { api, .. } => {

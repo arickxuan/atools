@@ -1,5 +1,7 @@
-use anyhow::Result;
 use std::path::PathBuf;
+use std::process::{Command, Stdio};
+
+use anyhow::Result;
 use tauri::{
     api::path::{home_dir, resource_dir},
     Env, PackageInfo,
@@ -28,4 +30,22 @@ pub fn path_to_str(path: &PathBuf) -> Result<&str> {
         .to_str()
         .ok_or(anyhow::anyhow!("failed to get path from {:?}", path))?;
     Ok(path_str)
+}
+
+pub fn run_shell(program: &str, args: &str, path: &str) {
+    let cmd = format!("{}/{}", path, program);
+    if let Some(h) = home_dir() {
+        let home = path_to_str(&h).unwrap();
+        let arg2 = format!("--log={}/.atoolsplugin/aria.log", home);
+        let args = format!("--conf-path={}/aria2.conf", path);
+        let arg3 = "--rpc-listen-port=16800";
+        let output = Command::new(&cmd)
+            .args([&args, &arg2, arg3])
+            .stdout(Stdio::inherit())
+            .stderr(Stdio::inherit())
+            .output()
+            .expect("failed to execute process");
+        log::info!("stdout: {}", String::from_utf8_lossy(&output.stdout));
+        log::info!("stderr: {}", String::from_utf8_lossy(&output.stderr));
+    }
 }

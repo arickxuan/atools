@@ -22,6 +22,9 @@
                 <div>
                     <RouterLink to="/upload">upload</RouterLink>
                 </div>
+              <div>
+                <RouterLink to="/book">book</RouterLink>
+              </div>
             </el-col>
         </div>
         <div class="right-column">
@@ -45,7 +48,7 @@ const screenHeight = ref(500);
 window.addEventListener("resize", function (event) {
     // 窗口大小改变时触发的代码
     // console.log_init("窗口大小已改变！", event);
-    screenHeight.value = window.innerHeight;
+    screenHeight.value = window.innerHeight -30;
 });
 
 onMounted(() => {
