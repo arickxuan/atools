@@ -7,6 +7,7 @@ extern crate log4rs;
 
 use std::env;
 use std::string::String;
+use std::sync::Mutex;
 
 // use log_init::{info}; //trace, warn
 use tauri::{Manager, Window};
@@ -15,6 +16,11 @@ use tauri_plugin_log::LogTarget;
 use tokio;
 use tokio::time;
 
+use once_cell::sync::OnceCell;
+
+pub static APP: OnceCell<tauri::AppHandle> = OnceCell::new();
+// Text to be translated
+pub struct StringWrapper(pub Mutex<String>);
 #[cfg(target_os = "macos")]
 
 fn query_accessibility_permissions() -> bool {
@@ -37,11 +43,16 @@ fn query_accessibility_permissions() -> bool {
 
 mod aria;
 mod clipboard;
+mod config;
 mod dir;
 mod fs;
 mod helper;
+mod hotkey;
 mod log_init;
+mod ocr;
+mod screenshot;
 mod tray;
+mod window;
 
 async fn print_tools() {
     let mut interval = time::interval(time::Duration::from_secs(1));

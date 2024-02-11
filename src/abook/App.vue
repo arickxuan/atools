@@ -20,9 +20,8 @@ export default {
 </script>
 
 <template>
-  <div class="main-content" :style="{ height: screenHeight + 'px' }">
+  <div class="main-content">
     <!-- 主要显示区域 -->
-    <h1>Main Content</h1>
     <RouterView />
   </div>
   <div class="bottom-nav">

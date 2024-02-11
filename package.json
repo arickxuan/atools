@@ -20,6 +20,7 @@
     "hls.js": "^1.5.4",
     "jsonpath": "^1.1.1",
     "pinia": "^2.1.7",
+    "primevue": "^3.48.1",
     "tauri-plugin-context-menu": "^0.7.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
@@ -30,5 +31,8 @@
     "unplugin-auto-import": "^0.17.5",
     "unplugin-vue-components": "^0.26.0",
     "vite": "^5.0.0"
-  }
+  },
+  "web-types": [
+    "./node_modules/mdui/web-types.zh-cn.json"
+  ]
 }

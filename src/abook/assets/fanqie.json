@@ -1,4 +1,4 @@
-{
+[{
   "bookSourceComment": "",
   "bookSourceGroup": "",
   "bookSourceName": "番茄小说",
@@ -69,4 +69,102 @@
   "searchUrl": "https:\/\/api5-normal-lf.fqnovel.com\/reading\/bookapi\/search\/page\/v\/?query={{key}}&aid=1967&channel=0&os_version=0&device_type=0&device_platform=0&iid=466614321180296&passback={{(page-1)*10}}&version_code=999",
   "variableComment": "",
   "weight": 0
-}
+},
+  {
+    "ruleExplore": {},
+    "bookSourceType": 0,
+    "ruleSearch": {
+      "author": "$.author",
+      "bookList": "$.data[*]",
+      "intro": "$.des",
+      "coverUrl": "$.images[0].path",
+      "kind": "$.tags[0].name\u0026\u0026$.tags[2].name\u0026\u0026$.tags[1].name\u0026\u0026$.tags[3].name",
+      "bookUrl": "http://api.doufu.me/topic/novel?topic_id\u003d{$.id}",
+      "name": "$.title"
+    },
+    "respondTime": 786,
+    "ruleContent": {
+      "content": "$.data.detail.des"
+    },
+    "loginUrl": "http://api.doufu.me/member/user_login",
+    "searchUrl": "http://api.doufu.me/search/content?keyword\u003d{{key}}\u0026start\u003d0\u0026rows\u003d20\u0026types\u003d18\u0026order\u003d\u0026is_finished\u003d\u0026vip\u003d",
+    "enabledExplore": true,
+    "weight": 62,
+    "header": "{\n  \"Cookie\": \"wh\u003d1080*2120; uid\u003d7383010; os\u003dAndroid-10; av\u003d7.1.0; ch\u003dtencent; md\u003dMi 10; cskey\u003d90b881a0908991; skey\u003d5f00e564e3ede8.21979201; aid\u003d3; xx\u003d0\"\n}",
+    "bookSourceComment": "",
+    "ruleToc": {
+      "chapterUrl": "http://api.doufu.me/index.php/post/view/{$.id}?with_ids\u003d1\u0026type\u003dread",
+      "isVip": "$.vip",
+      "chapterList": "$.data.list",
+      "updateTime": "$.add_time",
+      "chapterName": "$.title"
+    },
+    "enabled": true,
+    "bookSourceUrl": "http://api.doufu.me",
+    "lastUpdateTime": 1689836420697,
+    "bookSourceName": "🌟 豆腐阅读",
+    "bookSourceGroup": "本地仓库",
+    "customOrder": 657,
+    "ruleBookInfo": {
+      "coverUrl": "$.images[0].path",
+      "author": "$.data.topic.author",
+      "kind": "$.tags[0].name\u0026\u0026$.tags[2].name\u0026\u0026$.tags[1].name\u0026\u0026$.tags[3].name",
+      "name": "$.data.topic.title",
+      "tocUrl": "http://api.doufu.me/index.php/novel/chapter_list?novel_id\u003d{$.data.topic.id}",
+      "lastChapter": ""
+    }
+  },
+  {
+    "ruleExplore": {
+      "author": "class.broadcaster@ownText##(\\d+).*万",
+      "bookList": "class.item-link",
+      "intro": "class.desc@text",
+      "coverUrl": "img@src",
+      "kind": "class.broadcaster@span@text",
+      "bookUrl": "href",
+      "name": "h2@textNodes"
+    },
+    "bookSourceType": 1,
+    "ruleSearch": {
+      "author": "$.broadcaster",
+      "bookList": "$.data.content[*]",
+      "intro": "$.descXx",
+      "coverUrl": "http://img.6yueting.com:20001/{{$.coverUrlLocal}}",
+      "kind": "$.author\u0026\u0026$.udate",
+      "bookUrl": "http://m.6yueting.com/list/{{$.code}}",
+      "name": "$.name##\u003cspan style\u003d\"color:red\"\u003e|\u003c/span\u003e"
+    },
+    "ruleBookInfo": {
+      "coverUrl": "class.book@img@src",
+      "author": "class.desc@class.text.1@text",
+      "kind": "",
+      "name": "class.desc@h2@text",
+      "intro": ".book-intro@text",
+      "lastChapter": "class.desc@class.text.3@text"
+    },
+    "respondTime": 358,
+    "ruleContent": {
+      "content": "\u003cjs\u003eresult\u003c/js\u003e",
+      "sourceRegex": ".*\\.(mp3|m4a).*"
+    },
+    "searchUrl": "http://m.6yueting.com/search/index/search?content\u003d{{key}}\u0026type\u003d1\u0026pageNum\u003d1\u0026pageSize\u003d40",
+    "weight": 62,
+    "enabledExplore": true,
+    "header": "{\n  \"User-Agent\": \"Mozilla/5.0 (Linux; U; Android 10; zh-Hans-CN; PCT-AL10 Build/HUAWEIPCT-AL10) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/78.0.3904.108 Quark/5.1.8.184 Mobile Safari/537.36 \"\n}",
+    "bookSourceComment": "// Error: Timed out waiting for 180000 ms",
+    "ruleToc": {
+      "chapterName": "text",
+      "chapterUrl": "href@js:\u0027http://m.6yueting.com\u0027+result+\u0027,{webView:“true”}\u0027",
+      "chapterList": "class.book-list@a"
+    },
+    "enabled": true,
+    "bookSourceUrl": "http://m.6yueting.com/",
+    "lastUpdateTime": 1641506913783,
+    "bookSourceName": "🐳六月听书",
+    "bookSourceGroup": "本地仓库",
+    "customOrder": 678,
+    "exploreUrl": "全部分类::http://m.6yueting.com/ys/t0/o1/p{{page}}\n玄幻奇幻::http://m.6yueting.com/ys/t1/o1/p{{page}}\n修真武侠::http://m.6yueting.com/ys/t2/o1/p{{page}}\n恐怖灵异::http://m.6yueting.com/ys/t3/o1/p{{page}}\n古今言情::http://m.6yueting.com/ys/t4/o1/p{{page}}\n都市言情::http://m.6yueting.com/ys/t28/o1/p{{page}}\n穿越重生::http://m.6yueting.com/ys/t5/o1/p{{page}}\n粤语古仔::http://m.6yueting.com/ys/t6/o1/p{{page}}\n网游小说::http://m.6yueting.com/ys/t7/o1/p{{page}}\n通俗文学::http://m.6yueting.com/ys/t11/o1/p{{page}}\n历史纪实::http://m.6yueting.com/ys/t12/o1/p{{page}}\n军事::http://m.6yueting.com/ys/t13/o1/p{{page}}\n悬疑推理::http://m.6yueting.com/ys/t14/o1/p{{page}}\nebc5系列::http://m.6yueting.com/ys/t18/o1/p{{page}}\n官场商战::http://m.6yueting.com/ys/t15/o1/p{{page}}\n儿童读物::http://m.6yueting.com/ys/t16/o1/p{{page}}\n广播剧::http://m.6yueting.com/ys/t17/o1/p{{page}}\n外文原版::http://m.6yueting.com/ys/t22/o1/p{{page}}\n\n评书大全::http://m.6yueting.com/ys/t8/o1/p{{page}}\n相声小品::http://m.6yueting.com/ys/t9/o1/p{{page}}\n百家讲坛::http://m.6yueting.com/ys/t10/o1/p{{page}}\n健康养生::http://m.6yueting.com/ys/t20/o1/p{{page}}\n教材::http://m.6yueting.com/ys/t21/o1/p{{page}}\n期刊头条::http://m.6yueting.com/ys/t23/o1/p{{page}}\n戏曲::http://m.6yueting.com/ys/t24/o1/p{{page}}\n脱口秀::http://m.6yueting.com/ys/t27/o1/p{{page}}"
+  },
+
+
+]

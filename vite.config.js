@@ -3,7 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import {fileURLToPath, URL} from 'node:url'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
+import {ElementPlusResolver,PrimeVueResolver} from 'unplugin-vue-components/resolvers'
 // import { appConfigDir } from "@tauri-apps/api/path";
 // import { getPluginDir } from "./src/utils/dir.js";
 
@@ -12,12 +12,21 @@ import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 export default defineConfig(async () => ({
   
   plugins: [
-    vue(),
+    vue(
+        {
+          template: {
+            compilerOptions: {
+              // 所有以 mdui- 开头的标签名都是 mdui 组件
+              isCustomElement: (tag) => tag.startsWith('mdui-')
+            }
+          }
+        }
+    ),
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver(),PrimeVueResolver()],
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver(),PrimeVueResolver()],
     }),
   ],
   //静态资源服务的文件夹

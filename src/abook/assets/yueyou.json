@@ -48,6 +48,6 @@
     "chapterName": "a@text",
     "chapterUrl": "a@href"
   },
-  "searchUrl": "https:\/\/m.muxtoo.com\/s?q={{key}},{\n  \"webView\": true\n}",
+  "searchUrl": "https:\/\/m.muxtoo.com\/s?q={{ key }}",
   "weight": 0
 }

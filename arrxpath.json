@@ -1,0 +1,94 @@
+[
+  {
+    "ruleExplore": {},
+    "bookSourceType": 0,
+    "ruleSearch": {
+      "author": "class.odd.1@text",
+      "bookList": "//tr[@id\u003d\"nr\"]",
+      "lastChapter": "tag.td.1@text",
+      "coverUrl": "tag.a.0@href##/(\\d+)_(\\d+)/##/files/article/image/$1/$2/$2s.jpg",
+      "kind": "tag.td.5@text",
+      "bookUrl": "tag.tr@tag.a.0@href",
+      "name": "tag.a.0@text"
+    },
+    "bookUrlPattern": "",
+    "respondTime": 440,
+    "ruleContent": {
+      "content": "id.content@textNodes##第\\w+|.*正文卷"
+    },
+    "loginUrl": "",
+    "searchUrl": "https://www.23wx.cc/modules/article/search.php?searchkey\u003d{{key}}\u0026page\u003d{{page}},{\n  \"charset\": \"gbk\"\n}",
+    "enabledExplore": false,
+    "weight": 51,
+    "bookSourceComment": "",
+    "ruleToc": {
+      "chapterName": "text",
+      "chapterUrl": "tag.a@href",
+      "chapterList": "id.list@tag.dd"
+    },
+    "enabled": true,
+    "bookSourceUrl": "https://www.23us.so",
+    "lastUpdateTime": 0,
+    "bookSourceName": "顶点小说⑯",
+    "bookSourceGroup": "阅读app,我的自选,失效",
+    "customOrder": -2085978699,
+    "ruleBookInfo": {
+      "coverUrl": "id.fmimg@tag.img@src",
+      "author": "id.info@tag.p.0@text##.*作者.",
+      "name": "id.info@tag.h1@text",
+      "intro": "id.intro@tag.p@text",
+      "lastChapter": "id.info@tag.p.2@text"
+    }
+  },
+  {
+    "ruleExplore": {
+      "author": "h1@text||a@text##.*\\(|\\).*",
+      "bookList": ".man_first ul li",
+      "lastChapter": "",
+      "wordCount": "",
+      "intro": "p@text##简介：",
+      "kind": "h3@text\u0026\u0026h4@text##/文|\\[|\\]",
+      "bookUrl": "h1@a@href||a@href",
+      "name": "h1@text||a@text##\\(.*\\)"
+    },
+    "bookSourceType": 0,
+    "ruleSearch": {
+      "wordCount": "",
+      "author": "a.1@text##.*——BY：|\\)|.*\\(",
+      "kind": "a.0@text",
+      "bookUrl": "a.1@href",
+      "name": "a.1@text##——BY：.*|\\(.*\\)",
+      "bookList": "//div[@class\u003d\"morelist\"]/ul/li"
+    },
+    "ruleBookInfo": {
+      "author": "h1@text##.*\\(|\\).*",
+      "lastChapter": "",
+      "wordCount": "",
+      "intro": "[name\u003ddescription]@content##.*简介：",
+      "kind": ".listcd@textNodes\u0026\u0026.mlist li.-1@text##全文免费阅读|入库：|\u003e|\\s",
+      "init": "",
+      "name": "h1@text##\\(.*\\)"
+    },
+    "respondTime": 289,
+    "ruleContent": {
+      "content": "class.conten@html"
+    },
+    "searchUrl": "/e/search/index.php,{\n\t\"method\":\"POST\",\n\"body\":\"show\u003dtitle,newstext\u0026btzz\u003db\u0026keyboard\u003d{{key}}\"\n}",
+    "weight": 60,
+    "enabledExplore": true,
+    "header": "{\"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36\"}",
+    "bookSourceComment": "//搜索翻页没必要，太多搜索会很慢",
+    "ruleToc": {
+      "chapterName": "text",
+      "chapterUrl": "href",
+      "chapterList": "+\u003cjs\u003e\nvar n\u003dresult.match(/\u003cb\u003e1\u003c\\/b\u003e\\/\u003cb\u003e(\\d+)\u003c\\/b\u003e/)[1];\n\nvar list\u003d[{text:\u0027第1页\u0027,href:baseUrl}];\n\nfor(var i\u003d2;i\u003c\u003dn;i++){\nlist.push({text:\u0027第\u0027+i+\u0027页\u0027,href:baseUrl.replace(/\\.html/,\u0027_\u0027+i+\u0027.html\u0027)});\n\n}\nlist\n\u003c/js\u003e"
+    },
+    "enabled": true,
+    "bookSourceUrl": "https://www.qubook.org##旅途",
+    "lastUpdateTime": 1685719807277,
+    "bookSourceName": "⌨趣书网(qubook)",
+    "bookSourceGroup": "本地仓库",
+    "customOrder": 1163,
+    "exploreUrl": "[{\"title\":\"🏅 热门排行 🏅\",\"url\":\"/images/rph.html\",\"style\":{\"layout_flexBasisPercent\":0.4,\"layout_flexGrow\":1}},{\"title\":\"🎖 书荒推荐 🎖\",\"url\":\"/images/sph.html\",\"style\":{\"layout_flexBasisPercent\":0.4,\"layout_flexGrow\":1}},{\"title\":\"💜 纯爱 💜\",\"url\":\"/bookbl/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":1}},{\"title\":\"现耽\",\"url\":\"/BookList/blxd/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"古耽\",\"url\":\"/BookList/blgd/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"穿越\",\"url\":\"/BookList/blcy/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"玄幻\",\"url\":\"/BookList/blxh/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"ＢＬ\",\"url\":\"/BookList/bltr/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"ＧＬ\",\"url\":\"/BookList/blbh/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"❤️ 女生 ❤️\",\"url\":\"/booknv/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":1}},{\"title\":\"现言\",\"url\":\"/BookList/nvds/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"古言\",\"url\":\"/BookList/nvgd/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"重生\",\"url\":\"/BookList/nvcy/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"玄幻\",\"url\":\"/BookList/nvxh/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"同人\",\"url\":\"/BookList/nvqc/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"网游\",\"url\":\"/BookList/nvwy/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"💙 男生 💙\",\"url\":\"/bookna/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":1}},{\"title\":\"玄幻\",\"url\":\"/BookList/naxh/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"武侠\",\"url\":\"/BookList/nawx/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"都市\",\"url\":\"/BookList/nads/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"历史\",\"url\":\"/BookList/najs/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"悬疑\",\"url\":\"/BookList/nakb/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}},{\"title\":\"科幻\",\"url\":\"/BookList/nakh/index\u003c,_{{page}}\u003e.html\",\"style\":{\"layout_flexGrow\":1,\"layout_flexBasisPercent\":0.25}}]"
+  }
+]
