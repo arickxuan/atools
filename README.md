@@ -41,6 +41,12 @@
 
 ![aria2](https://piclib.arick.top/assets/2024/02/atools/movie.png)
 
+### m3u8下载
+感谢m3u8-downloader,本项目是对该项目的模仿
+
+![aria2](https://piclib.arick.top/assets/2024/02/atools/m3u8.png)
+
+
 ### markdown
 感谢marktext,项目项目基于其进行二开和封装
 
