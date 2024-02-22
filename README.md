@@ -6,13 +6,8 @@
 
 ## 功能规划
 
-### aria2 下载器
-感谢aria2,ariaNG项目,本项目只是简单的进行了封装
-
-![aria2](https://piclib.arick.top/assets/2024/02/atools/aria.png)
-
-### 剪切板
-感谢aria2,截面模仿了paste
+### 剪切板管理器
+感谢paste,ui模仿了paste
 
 ![aria2](https://piclib.arick.top/assets/2024/02/atools/cate.png)
 
@@ -46,6 +41,10 @@
 
 ![aria2](https://piclib.arick.top/assets/2024/02/atools/m3u8.png)
 
+### aria2 下载器
+感谢aria2,ariaNG项目,本项目只是简单的进行了封装
+
+![aria2](https://piclib.arick.top/assets/2024/02/atools/aria.png)
 
 ### markdown
 感谢marktext,项目项目基于其进行二开和封装
