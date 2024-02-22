@@ -30,7 +30,7 @@
 ### OCR
 感谢pot,使用了pot项目中用swift编写的调用mac系统的api的OCR功能
 
-![aria2](https://piclib.arick.top/assets/2024/02/atools/ocr.png)
+![aria2](https://piclib.arick.top/assets/2024/02/atools/orc.png)
 
 ### 视频
 感谢catvod,项目使用了其api和ui
