@@ -1,113 +1,33 @@
 {
+  "productName": "amusic",
+  "version": "0.0.0",
+  "identifier": "com.tauri.dev",
   "build": {
     "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
     "beforeBuildCommand": "npm run build",
-    "devPath": "http://localhost:1420",
-    
-    "distDir": "../dist"
+    "frontendDist": "../dist"
   },
-  "package": {
-    "productName": "atools",
-    "version": "0.0.1"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": true,
-      "shell": {
-        "all": false,
-        "open": true
-      },
-      "fs": {
-        "all": true,
-        "scope": [
-          "*",
-          "$APPCONFIG",
-          "$APPCONFIG/*",
-          "$DOCUMENT",
-          "$DOWNLOAD",
-          "$DESKTOP",
-          "$HOME"
-        ]
-      },
-      "http": {
-        "all": true,
-        "scope": ["http://*", "https://*"],
-        "request": true
-      },
-      "dialog": {
-        "all": true
-      },
-      "notification": {
-        "all": true
-      },
-      "window": {
-        "all": true
-      },
-      "os": {
-        "all": true
-      },
-      "path": {
-        "all": true
-      },
-      "protocol": {
-        "all": true,
-        "assetScope": [
-          "*",
-          "$APPCONFIG",
-          "$APPCONFIG/*",
-          "$DOCUMENT",
-          "$DOWNLOAD",
-          "$DESKTOP",
-          "$HOME"
-        ]
-      },
-      "process": {
-        "all": true
-      },
-      "clipboard": {
-        "all": true
-      },
-      "app": {
-        "all": true
-      }
-    },
-    "bundle": {
-      "active": true,
-      "targets": "all",
-      "resources": [ "assets"],
-      "externalBin": [],
-      "identifier": "com.arick.atools",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],"deb": {
-        "depends": []
-      },
-      "macOS": {
-        "frameworks": [],
-        "exceptionDomain": ""
-      }
-    },
-    "security": {
-      "csp": null
-    },
-    "windows": [
+  "app": {"windows": [
       {
-        "url": "index.html",
-        "fullscreen": false,
-        "resizable": true,
-        "title": "main",
+        "title": "amusic",
         "width": 800,
-        "height": 600,
-        "alwaysOnTop": false
+        "height": 600
       }
     ],
-    "systemTray": {
-      "iconPath": "icons/icon.png",
-      "iconAsTemplate": true
+    "security": {
+      "csp": null
     }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
   }
 }
