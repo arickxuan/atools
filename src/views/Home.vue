@@ -21,7 +21,7 @@
     </nav>
     <div class="imgBox" @click="uploadFile">
       <div class="img"><img src="../assets/vue.svg" alt="" /></div>
-      <div class="title"><p>图片上传2</p></div>
+      <div class="title"><p>上传图片</p></div>
       <input
         type="file"
         style="display: none"
@@ -48,7 +48,8 @@
 import {ref} from "vue";
 // import { DropdownInstance } from "element-plus";
 // import { ArrowLeft, ArrowRight } from "@element-plus/icons-vue";
-
+import atools from "@/core/atools.js";
+console.log(atools);
 const fileInput = ref();
 function uploadFile() {
   console.log("uploadFile8");
@@ -135,5 +136,16 @@ export default {
 
 .tools {
   margin-top: 20px;
+}
+
+.temp{
+  color: aliceblue;
+}
+.temp .el-dropdown{
+
+  color: aliceblue;
+}
+.imgBox .title p{
+  color: aliceblue;
 }
 </style>

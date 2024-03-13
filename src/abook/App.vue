@@ -42,7 +42,8 @@ export default {
 
 <style scoped>
 .main-content {
-  padding: 20px;
+  margin: 0px;
+  padding: 0px;
   background-color: #f0f0f0;
   min-height: 80vh; /* 最小高度为80%视口高度 */
 }

@@ -8,12 +8,12 @@ export class PluginLoader {
     // private readonly pluginMap: Map<string, IPicGoPluginInterface> = new Map()
     constructor(ctx) {
         this.ctx = ctx
-        const packagePath = path.join(this.ctx.baseDir, 'package.json')
-        if (!fs.existsSync(packagePath)) {
+        const packagePath = join(this.ctx.baseDir, 'package.json')
+        if (!exists(packagePath)) {
             const pkg = {
-                name: 'picgo-plugins',
-                description: 'picgo-plugins',
-                repository: 'https://github.com/PicGo/PicGo-Core',
+                name: 'atools-plugins',
+                description: 'atools-plugins',
+                repository: 'https://github.com/',
                 license: 'MIT'
             }
             fs.writeFileSync(packagePath, JSON.stringify(pkg), 'utf8')

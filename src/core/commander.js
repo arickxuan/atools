@@ -13,7 +13,7 @@ export class Commander {
     constructor(ctx) {
         this.program = new Command()
         //new Command('run-git-commit', ['commit', '-m', 'the commit message'])
-        this.inquirer = inquirer
+        //this.inquirer = inquirer
         this.ctx = ctx
     }
 

@@ -115,6 +115,7 @@ onMounted ( async () => {
 <style scoped>
  .content {
    margin: 20px auto;
+   padding: 20px;
  }
  .footer {
    margin: 40px auto;

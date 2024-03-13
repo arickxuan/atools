@@ -8,24 +8,18 @@
     <title>player</title>
 </head>
 <body>
-<div id="dplayer"></div>
-<script src="src/assets/hls.min.js"></script>
-<script src="src/assets/DPlayer.min.js"></script>
-<script type="module">
 
-
-    const dp = new DPlayer({
-        container: document.getElementById('dplayer'),
-        video: {
-            url: 'https://leshiyuncdn.ahjunqin.top/20240129/r4fKkMtr/2000kb/hls/index.m3u8',
-            type: 'hls',
-        },
-        pluginOptions: {
-            hls: {
-                // hls config
-            },
-        },
-    });
-</script>
+    <video-js id=vid1 width=600 height=300 class="vjs-default-skin" controls>
+        <source
+           src="https://vip.ffzyread1.com/20240310/25093_9d35f047/index.m3u8"
+           type="application/x-mpegURL">
+      </video-js>
+      <!-- "core" version of Video.js -->
+      <script src="dist/assets/video.js"></script>
+      <script src="dist/assets/hls.js"></script>
+      <script>
+      var player = videojs('vid1');
+      player.play();
+      </script>
 </body>
 </html>

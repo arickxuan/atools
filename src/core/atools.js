@@ -1,9 +1,11 @@
 import {LifecyclePlugins} from './lifecyclePlugins.js'
 import {Lifecycle} from './lifecycle.js'
 import {PluginLoader} from './pluginLoader.js'
-import {PluginHandler} from './pluginHandler.js'
-import {getConfigDir} from '@/utils/dir.js'
+import {pluginHandler} from './pluginHandler.js'
+import {getConfigDir,configDirName} from '@/utils/dir.js'
 import {Request} from './request.js'
+// import {Commander} from './commander.js'
+// import DB from './db.js'
 
 // import path from 'path'
 
@@ -35,7 +37,7 @@ class Atools {
     }
 
     constructor(configPath = '') {
-        super()
+        // super()
         this.configPath = configPath
         this.output = []
         this.input = []
@@ -47,13 +49,15 @@ class Atools {
     async initConfigPath() {
         if (this.configPath === '') {
             let home = await getConfigDir()
-            this.configPath = home + '/.atoolsplugins/config.json'
+            // console.log('home', home)
+            this.configPath = home + '/config.json'
         }
-        if (path.extname(this.configPath).toUpperCase() !== '.JSON') {
-            this.configPath = ''
-            throw Error('The configuration file only supports JSON format.')
-        }
-        this.baseDir = path.dirname(this.configPath)
+        console.log('home', this.configPath)
+        // if (path.extname(this.configPath).toUpperCase() !== '.JSON') {
+        //     this.configPath = ''
+        //     throw Error('The configuration file only supports JSON format.')
+        // }
+        this.baseDir =  configDirName
         const exist = fs.pathExistsSync(this.configPath)
         if (!exist) {
             fs.ensureFileSync(`${this.configPath}`)
@@ -61,8 +65,8 @@ class Atools {
     }
 
     init() {
-        this.db = new DB(this)
-        this._config = this.db.read(true)
+        // this.db = new DB(this)
+        this._config = {} //this.db.read(true)
         try {
             this.helper = {
                 transformer: new LifecyclePlugins('transformer'),
@@ -74,8 +78,9 @@ class Atools {
 
             // init 18n at first
             this.Request = new Request(this)
+            // this.cmd = new Commander(this)
             this._pluginLoader = new PluginLoader(this)
-            this.pluginHandler = new PluginHandler(this)
+            // this.pluginHandler = new pluginHandler(this)
             this.lifecycle = new Lifecycle(this)
             
             // load self plugins
@@ -87,11 +92,11 @@ class Atools {
             // this._pluginLoader.load() ???
             
             // this.log_init = new Logger(this)
-            this.cmd = new Commander(this)
+            
         
         } catch (e) {
-            this.emit(IBuildInEvent.UPLOAD_PROGRESS, -1)
-            this.log.error(e)
+            // this.emit(IBuildInEvent.UPLOAD_PROGRESS, -1)
+            // this.log.error(e)
             throw e
         }
     }
@@ -132,7 +137,7 @@ class Atools {
             return
         }
         this.setConfig(config)
-        this.db.saveConfig(config)
+        //this.db.saveConfig(config)
     }
 
     removeConfig(key, propName) {
@@ -142,7 +147,7 @@ class Atools {
             return
         }
         this.unsetConfig(key, propName)
-        this.db.unset(key, propName)
+        //this.db.unset(key, propName)
     }
 
     setConfig(config) {

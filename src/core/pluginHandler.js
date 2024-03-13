@@ -1,5 +1,6 @@
-export const pluginHandler = {
-    handle: (ctx) => {
+export class  pluginHandler   {
+    constructor(ctx) {
+    // handle: (ctx) => {
         // const pluginHandler = new PluginHandler(ctx)
         const cmd = ctx.cmd
         cmd.program

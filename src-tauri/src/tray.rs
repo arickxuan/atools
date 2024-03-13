@@ -15,6 +15,8 @@ pub fn menu() -> SystemTray {
 
     let showbook = CustomMenuItem::new("showbook".to_string(), "打开abook");
     let showAria2 = CustomMenuItem::new("showAria2".to_string(), "打开下载");
+    let showTranslate = CustomMenuItem::new("showTranslate".to_string(), "打开翻译");
+
     let tray_menu = SystemTrayMenu::new()
         .add_submenu(SystemTraySubmenu::new(
             "选择图床",
@@ -25,6 +27,7 @@ pub fn menu() -> SystemTray {
         .add_native_item(SystemTrayMenuItem::Separator)
         .add_item(showbook)
         .add_item(showAria2)
+        .add_item(showTranslate)
         .add_native_item(SystemTrayMenuItem::Separator)
         .add_item(show)
         .add_item(hide)
@@ -112,6 +115,25 @@ pub fn handler(app: &AppHandle, event: SystemTrayEvent) {
                 let _ = local_window.set_title("aria2");
                 local_window.show().expect("msg");
             }
+
+            "showTranslate" => {
+                if let Some(window) = app.get_window("translate") {
+                    trace_err!(window.unminimize(), "set win unminimize");
+                    trace_err!(window.show(), "set win visible");
+                    trace_err!(window.set_focus(), "set win focus");
+                    return;
+                }
+                let local_window = tauri::WindowBuilder::new(
+                    app,
+                    "translate",
+                    tauri::WindowUrl::App("translate.html".into()),
+                )
+                .build()
+                .expect("msg");
+                let _ = local_window.set_title("translate");
+                local_window.show().expect("msg");
+            }
+
             "showbook" => {
                 if let Some(window) = app.get_window("abook") {
                     trace_err!(window.unminimize(), "set win unminimize");

@@ -12,26 +12,26 @@ export class Request {
     }
 
     init() {
-        const proxy = this.ctx.getConfig < Undefinable < string >> ('picBed.proxy')
-        if (proxy) {
-            this.proxy = proxy
-        }
-        listenEvent()
+        // const proxy = this.ctx.getConfig < Undefinable < string >> ('picBed.proxy')
+        // if (proxy) {
+        //     this.proxy = proxy
+        // }
+        // listenEvent()
     }
 
-    listenEvent = listen(IBusEvent.CONFIG_CHANGE, (event) => {
-        console.log(`Got error in window ${event.windowLabel}, payload: ${event.payload}`);
-        switch (event.payload.configName) {
-            case 'picBed':
-                if (event.payload.value) {
-                    this.proxy = (event.payload.value).proxy
-                }
-                break
-            case 'picBed.proxy':
-                this.proxy = event.payload.value
-                break
-        }
-    });
+    // listenEvent = listen(IBusEvent.CONFIG_CHANGE, (event) => {
+    //     console.log(`Got error in window ${event.windowLabel}, payload: ${event.payload}`);
+    //     switch (event.payload.configName) {
+    //         case 'picBed':
+    //             if (event.payload.value) {
+    //                 this.proxy = (event.payload.value).proxy
+    //             }
+    //             break
+    //         case 'picBed.proxy':
+    //             this.proxy = event.payload.value
+    //             break
+    //     }
+    // });
     
 
     handleProxy() {
@@ -55,17 +55,17 @@ export class Request {
         this.options.headers = options.headers || {}
         this.options.maxBodyLength = Infinity
         this.options.maxContentLength = Infinity
-        if (this.options.proxy && options.url?.startsWith('https://')) {
-            this.options.httpsAgent = tunnel.httpsOverHttp({
-                proxy: {
-                    host: this.options.proxy.host,
-                    port: this.options.proxy.port
-                }
-            })
-            this.options.proxy = false
-        } else {
-            this.options.httpsAgent = httpsAgent
-        }
+        // if (this.options.proxy && options.url?.startsWith('https://')) {
+        //     this.options.httpsAgent = tunnel.httpsOverHttp({
+        //         proxy: {
+        //             host: this.options.proxy.host,
+        //             port: this.options.proxy.port
+        //         }
+        //     })
+        //     this.options.proxy = false
+        // } else {
+        //     this.options.httpsAgent = httpsAgent
+        // }
         // !NOTICE this.options !== options
         // this.options is the default options
         const instance = axios.create(this.options)
@@ -115,10 +115,10 @@ export class Request {
 
 export default Request
 
-const httpsAgent = new https.Agent({
-    maxVersion: 'TLSv1.2',
-    minVersion: 'TLSv1.2'
-})
+// const httpsAgent = new https.Agent({
+//     maxVersion: 'TLSv1.2',
+//     minVersion: 'TLSv1.2'
+// })
 
 // thanks for https://github.dev/request/request/blob/master/index.js
 function appendFormData(form, key, data) {
@@ -130,8 +130,7 @@ function appendFormData(form, key, data) {
 }
 
 function requestInterceptor(options) {
-    __isOldOptions
-} {
+    
     let __isOldOptions = false
     // user request config proxy
     if (options.proxy) {
@@ -149,12 +148,12 @@ function requestInterceptor(options) {
         if (proxyOptions) {
             if (options.url?.startsWith('https://')) {
                 opt.proxy = false
-                opt.httpsAgent = tunnel.httpsOverHttp({
-                    proxy: {
-                        host: proxyOptions?.hostname,
-                        port: parseInt(proxyOptions?.port, 10)
-                    }
-                })
+                // opt.httpsAgent = tunnel.httpsOverHttp({
+                //     proxy: {
+                //         host: proxyOptions?.hostname,
+                //         port: parseInt(proxyOptions?.port, 10)
+                //     }
+                // })
             } else {
                 opt.proxy = {
                     host: proxyOptions.hostname,

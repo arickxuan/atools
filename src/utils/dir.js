@@ -1,6 +1,8 @@
 // import os from "os";
 import {homeDir} from "@tauri-apps/api/path";
 
+let configDirName = '.atools';
+let configDir = '.atools';
 
 function getPluginDir() {
     // let re = os.homedir();
@@ -25,11 +27,13 @@ function getPluginDir() {
 
 async function getConfigDir(){
     let home = await homeDir()
-    let path = homedir() + '/.atoolsplugin'
-    return path
+    // console.log("home",home)
+    configDir = home + configDirName
+    return configDir
 }
 
 export {
     getPluginDir,
-    getConfigDir
+    getConfigDir,
+    configDirName,
 }

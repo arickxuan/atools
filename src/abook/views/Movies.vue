@@ -24,6 +24,7 @@ let baseUrl = 'http://cj.ffzyapi.com/api.php/provide/vod/?'
 let sources = ref([
   {name:"非非",url:'http://cj.ffzyapi.com/api.php/provide/vod/?'},
   {name: "1080zyku", url: 'https://api.1080zyku.com/inc/api_mac10.php?'},
+  {name: "ikanju", url: 'https://www.ikanju.cc/api.php/provide/vod/'}
 ])
 
 let currentSource = ref(sources.value[0])

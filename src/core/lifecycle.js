@@ -2,7 +2,7 @@ export class Lifecycle {
     //   ctx: IPicGo
 
     constructor(ctx) {
-        super()
+        // super()
         this.ctx = ctx
     }
 

@@ -2,30 +2,30 @@
     <div class="container" :style="{ height: screenHeight + 'px' }">
         <div class="left-column">
             <!--  -->
-            <el-col :span="12">
-                <!-- <h5 class="mb-2">Default</h5> -->
-                <div>
-                    <RouterLink to="/">index</RouterLink>
-                </div>
-                <div>
-                    <RouterLink to="/settings">settings</RouterLink>
-                </div>
-                <div>
-                    <RouterLink to="/tools">tools</RouterLink>
-                </div>
-                <div>
-                    <RouterLink to="/plugin">plugin</RouterLink>
-                </div>
-                <div>
-                    <RouterLink to="/temp">temp</RouterLink>
-                </div>
-                <div>
-                    <RouterLink to="/upload">upload</RouterLink>
-                </div>
-              <div>
+            <!-- <el-col :span="12"> -->
+            <!-- <h5 class="mb-2">Default</h5> -->
+            <div>
+                <RouterLink to="/">index</RouterLink>
+            </div>
+            <div>
+                <RouterLink to="/settings">settings</RouterLink>
+            </div>
+            <div>
+                <RouterLink to="/tools">tools</RouterLink>
+            </div>
+            <div>
+                <RouterLink to="/plugin">plugin</RouterLink>
+            </div>
+            <div>
+                <RouterLink to="/temp">temp</RouterLink>
+            </div>
+            <div>
+                <RouterLink to="/upload">upload</RouterLink>
+            </div>
+            <div>
                 <RouterLink to="/book">book</RouterLink>
-              </div>
-            </el-col>
+            </div>
+            <!-- </el-col> -->
         </div>
         <div class="right-column">
             <RouterView />
@@ -33,7 +33,7 @@
     </div>
 </template>
 <script setup>
-import {onMounted, onUpdated, ref} from "vue";
+import { onMounted, onUpdated, ref } from "vue";
 
 // import { Document, Menu as IconMenu, Location } from "@element-plus/icons-vue";
 // const handleOpen = (key, keyPath) => {
@@ -48,7 +48,7 @@ const screenHeight = ref(500);
 window.addEventListener("resize", function (event) {
     // 窗口大小改变时触发的代码
     // console.log_init("窗口大小已改变！", event);
-    screenHeight.value = window.innerHeight -30;
+    screenHeight.value = window.innerHeight - 30;
 });
 
 onMounted(() => {
@@ -93,9 +93,18 @@ export default {
 }
 
 .left-column {
+    width: 200px;
     /* flex属性是flex-grow, flex-shrink 和 flex-basis的简写，
     默认值为0 1 auto。后两个属性可选 */
     /* flex: 0 1 50px; */
+    display: flex;
+    /* 启用Flexbox布局 */
+    flex-direction: column;
+    /* 子元素纵向排列 */
+    justify-content: space-around;
+    /* 子元素之间的间距相同 */
+
+
 
     /* flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。 */
     flex-grow: 0;
@@ -125,11 +134,18 @@ export default {
     默认值为0，即按照它们在flex布局中的顺序排列。 */
     order: 0;
 
-    background-color: #353536;
+    background-color: #161818;
 }
 
 .right-column {
     flex: 1;
     background-color: #1a2224;
 }
-</style>
+
+.left-column a {
+    color: white;
+}
+
+.left-column a:hover {
+    color: #66b3ff;
+}</style>

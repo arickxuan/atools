@@ -4,6 +4,7 @@ import {createApp} from "vue";
 import 'primevue/resources/themes/aura-light-green/theme.css'
 import {createPinia} from 'pinia'
 import App from "./App.vue";
+// import Movies from "./views/Movies.vue"; // 引入路由
 import router from "./router"; // 引入路由
 
 const app = createApp(App);

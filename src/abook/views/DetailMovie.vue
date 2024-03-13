@@ -1,7 +1,8 @@
 <script setup>
-import {onMounted, onUnmounted, ref} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import DPlayer from 'dplayer';
+import VideoPlayer from '../components/VideoPlayer.vue'
+import { onMounted, onUnmounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+// import DPlayer from 'dplayer';
 // import { storeToRefs } from 'pinia'
 // import { useCurrentMoviesStore } from '../store/movies.js'
 // const store = useCurrentMoviesStore()
@@ -20,7 +21,16 @@ const router = useRouter()
 let urls = ref([])
 
 const activeIndex = ref('1')
+let currentIndex = 0
+const url = ref('')
+const changeVideoRef = ref('')
 
+const videoOptions = ref()
+
+// const index = ref(0)
+
+var playerId = ref('my-video')
+var player = ref({})
 
 
 async function getData() {
@@ -33,26 +43,26 @@ const handleSelect = (key, keyPath) => {
   console.log(key, keyPath)
 }
 
-function choiceVideo(index) {
-  // router.replace({
-  //   // path: '/movies/detail/' + item.vod_id,
-  //   name: 'detailMovie',
-  //   params: { id: route.params.id +1},
-  //   query: {
-  //     url: props.url,
-  //     img: props.img,
-  //     content: props.content,
-  //     chapter: index
-  //   }
-  // })
-  dp.value.switchVideo(
-      {
-        url: urls.value[index].url,
-        // pic: props.img,
-        // thumbnails: 'second.jpg',
-      },
-  );
+function choiceVideo(newIndex) {
+  url.value = urls.value[newIndex].url
+  changeVideoRef.value.changeSource(urls.value[newIndex].url)
+  currentIndex = newIndex
+
 }
+
+// 定义父组件的方法
+function nextVideo() {
+  console.log('父组件的方法被调用:');
+  if (currentIndex < urls.value.length) {
+    changeVideoRef.value.changeSource(urls.value[currentIndex + 1].url)
+    activeIndex.value = urls.value[currentIndex + 1].name
+    currentIndex = currentIndex + 1
+  } else {
+    //
+  }
+
+}
+
 
 function getPlayer() {
   let index = 0
@@ -63,7 +73,7 @@ function getPlayer() {
   }
   dp.value = new DPlayer({
     container: document.getElementById('dplayer'),
-    playbackSpeed: [1.0, 1.25, 1.5, 1.75,2.0, 2.5, 3.0],
+    playbackSpeed: [1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0],
     video: {
       // pic: props.img,
       url: urls.value[index].url, //'https://leshiyuncdn.ahjunqin.top/20240129/r4fKkMtr/2000kb/hls/index.m3u8',
@@ -76,7 +86,7 @@ function getPlayer() {
     },
     contextmenu: [
       {
-        text: 'm3u8: '+urls.value[index].url,
+        text: 'm3u8: ' + urls.value[index].url,
         link: urls.value[index].url,
       },
       {
@@ -111,23 +121,52 @@ onMounted(async () => {
   console.log(typeof props.chapter);
 
   await getData();
-  getPlayer();
+  // getPlayer();
+  currentIndex = 0
+  if (props.chapter == undefined) {
+    currentIndex = 0
+  } else {
+    currentIndex = Number(props.chapter)
+  }
+  let options = {
+    autoplay: false,
+    playbackRates: [0.5, 1, 1.5, 1.75, 2, 2.5, 3],
+    muted: false,
+    language: 'zh-CN',
+    volume: 1,
+    playbackRate: 1,
+    "preload": "auto",
+    controls: true,
+    loop: false,
+    sources: [
+      {
+        type: 'application/x-mpegURL',
+        src: urls.value[currentIndex].url,
+      }
+
+    ]
+  }
+  videoOptions.value = options
+
+
+  //   url.value = urls.value[index].url
+
 
 
 });
 
 onUnmounted(() => {
-
+  // player.value.dispose()
 })
 
-let getUrls = (url) => {
-  console.log(url)
+let getUrls = (nurl) => {
+  console.log(nurl)
   let urls = []
-  url.split("$$$").forEach((items, index) => {
+  nurl.split("$$$").forEach((items, index) => {
     items.split("#").forEach((item, index) => {
       let arr = item.split("$")
       if (arr[1].includes(".m3u8")) {
-        urls.push({"name": arr[0], "url": arr[1]})
+        urls.push({ "name": arr[0], "url": arr[1] })
       }
 
     })
@@ -140,35 +179,33 @@ let getUrls = (url) => {
 
 <template>
   <div class="player">
-    <div id="dplayer"></div>
+    <!--  <div id="dplayer"></div> -->
+    <VideoPlayer :options="videoOptions" ref="changeVideoRef" @child-event="nextVideo" v-if="videoOptions"></VideoPlayer>
   </div>
 
-  <!--  <div v-for="(item,index) in urls" :key="item.name">-->
-  <!--    <button @click="choiceVideo(index)">{{ item.name }}</button>-->
-  <!--  </div>-->
+  <div v-html="content"></div>
 
-  <div class="menu">
-    <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo"
-        mode="horizontal"
-        @select="handleSelect"
-    >
-      <el-menu-item @click="choiceVideo(index)" :index="item.name" v-for="(item,index) in urls">
-        {{ item.name }}
-      </el-menu-item>
+  <el-button-group class="ml-4" >
+    <el-button  @click="choiceVideo(index)" v-for="(item, index) in urls" :key="item.name">{{ item.name }}</el-button>
+  </el-button-group>
 
-    </el-menu>
-  </div>
+  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" :ellipsis="true" >
+    <el-menu-item type="primary" @click="choiceVideo(index)" :index="item.name" v-for="(item, index) in urls">
+      {{ item.name }}
+    </el-menu-item>
+
+  </el-menu>
+
+  <h2>333</h2>
+  
 </template>
 
 <style scoped>
-.player {
+.video-js {
   min-width: 400px;
 }
 
-.vjs_video_1693-dimensions {
-  //width: 100%;
-  //height: 100%;
+.video-js .vjs-tech {
+  object-fit: fill;
 }
 </style>
