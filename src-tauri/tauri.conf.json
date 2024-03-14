@@ -11,6 +11,22 @@
   "app": {"windows": [
       {
         "title": "amusic",
+        "url": "amusic.html",
+        "label": "amusic",
+        "width": 800,
+        "height": 600
+      },
+      {
+        "title": "pot",
+        "url": "pot.html",
+        "label": "pot",
+        "width": 800,
+        "height": 600
+      },
+      {
+        "title": "paste",
+        "url": "paste.html",
+        "label": "paste",
         "width": 800,
         "height": 600
       }

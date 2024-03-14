@@ -17,9 +17,11 @@
                     </el-input>
 
                 </div>
-                <div class="right-control"><el-button color="#EB6728"
+                <div class="right-control">
+                <el-button color="#EB6728"
                         style="--el-button-text-color: #ffffff;--el-button-hover-text-color: #ffffff;" :icon="Setting"
-                        to="/settings"></el-button>
+                        to="/settings">
+                        </el-button>
                     <!--  -->
                 </div>
             </div>
@@ -42,6 +44,9 @@
                     </div>
                     <div>
                         <router-link to="/plugins"> 插件管理</router-link>
+                    </div>
+                    <div>
+                        <router-link to="/test"> test</router-link>
                     </div>
                 </div>
                 <div class="songList">

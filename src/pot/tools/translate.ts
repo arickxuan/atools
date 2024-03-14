@@ -24,6 +24,48 @@ function getTimeStamp(iCount: number) {
         return ts;
     }
 }
+
+export async function baidu_detect(text: string) {
+    const lang_map = {
+        zh: 'zh_cn',
+        cht: 'zh_tw',
+        en: 'en',
+        jp: 'ja',
+        kor: 'ko',
+        fra: 'fr',
+        spa: 'es',
+        ru: 'ru',
+        de: 'de',
+        it: 'it',
+        tr: 'tr',
+        pt: 'pt_pt',
+        vie: 'vi',
+        id: 'id',
+        th: 'th',
+        may: 'ms',
+        ar: 'ar',
+        hi: 'hi',
+        nob: 'nb_no',
+        nno: 'nn_no',
+        per: 'fa',
+    };
+    let res = await fetch('https://fanyi.baidu.com/langdetect', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: {
+            query: text,
+        },
+    });
+    if (res.ok) {
+        let result = await res.json();
+        if (result.lan && result.lan in lang_map) {
+            return lang_map[result.lan];
+        }
+    }
+    return 'en';
+}
 export async function translateGoogle(text: string, from: string, to: string, options = {}): Promise<string> {
     const { config } = options;
 
@@ -101,6 +143,70 @@ export async function translateGoogle(text: string, from: string, to: string, op
     }
 }
 
+export async function translateGoogleProxy(text: string, from: string, to: string, options = {}): Promise<string> {
+    const { config }  = options;
+
+    let my = await fetch("https://api.myip.la/cn?json")
+    console.log(await my.json());
+    let lingvaConfig = { requestPath: 'lingva.pot-app.com' };
+
+    if (config !== undefined) {
+        lingvaConfig = config;
+    }
+
+    let { requestPath } = lingvaConfig;
+    if (!requestPath.startsWith('http')) {
+        requestPath = 'https://' + requestPath;
+    }
+    let url = `${requestPath}/api/v1/${from}/${to}/${text}`
+    console.log(url);
+    const res = await fetch(url);
+    console.log(res.status);
+    if (res.status !== 200) {
+        throw new Error(`Error ${res.status}: ${res.statusText}`);
+    }
+    let resault = await res.json();
+    console.log(resault);
+    let re = resault['translation'] as string
+    console.log(re);
+    return re;
+    if (res.ok) {
+        
+    }
+}
+
+// /api/translate?source=auto&target=zh&sourceText=How%20are%20you&platform=WeChat_APP&guid=oqdgX0SIwhvM0TmqzTHghWBvfk22&candidateLangs=en%7Czh
+export async function translateTencentProxy(text: string, from: string, to: string, options = {}): Promise<string> {
+    const { config }  = options;
+
+    let lingvaConfig = { requestPath: 'wxapp.translator.qq.com' };
+
+    if (config !== undefined) {
+        lingvaConfig = config;
+    }
+
+    let { requestPath } = lingvaConfig;
+    if (!requestPath.startsWith('http')) {
+        requestPath = 'https://' + requestPath;
+    }
+    text = encodeURIComponent(text); 
+    let url = `${requestPath}/api/translate?source=auto&target=auto&sourceText=${text}&platform=WeChat_APP&guid=oqdgX0SIwhvM0TmqzTHghWBvfk22&candidateLangs=en|zh`
+    console.log(url);
+    const res = await fetch(url,{
+        method: 'GET'});
+    console.log(res.status);
+    if (res.status !== 200) {
+        throw new Error(`Error ${res.status}: ${res.statusText}`);
+    }
+    let resault = await res.json();
+    console.log(resault);
+    let re = resault['targetText'] as string
+    console.log(re);
+    return re;
+    if (res.ok) {
+        
+    }
+}
 export async function translateDeepl(text: string, from: string, to: string): Promise<string> {
     const url = 'https://www2.deepl.com/jsonrpc';
     const rand = getRandomNumber();
@@ -160,21 +266,23 @@ export async function translateBing(text: string, from: string, to: string) : Pr
     let token = await fetch(token_url, {
         method: 'GET',
         headers: {
-            'User-Agent':
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42',
+            'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0',
         },
         responseType: 2,
     });
-
+    
+    console.log(token.ok);
     if (token.ok) {
         const url = 'https://api-edge.cognitive.microsofttranslator.com/translate';
-
-        let res = await fetch(url, {
+        console.log(url);
+        let token_str = await token.text()
+        console.log(await token_str);
+        let data = {
             method: 'POST',
             headers: {
                 accept: '*/*',
                 'accept-language': 'zh-TW,zh;q=0.9,ja;q=0.8,zh-CN;q=0.7,en-US;q=0.6,en;q=0.5',
-                authorization: 'Bearer ' + token.data,
+                authorization: 'Bearer ' + token_str,
                 'cache-control': 'no-cache',
                 'content-type': 'application/json',
                 pragma: 'no-cache',
@@ -186,8 +294,7 @@ export async function translateBing(text: string, from: string, to: string) : Pr
                 'sec-fetch-site': 'cross-site',
                 Referer: 'https://appsumo.com/',
                 'Referrer-Policy': 'strict-origin-when-cross-origin',
-                'User-Agent':
-                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42',
+                // 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42',
             },
             query: {
                 from: from,
@@ -196,10 +303,12 @@ export async function translateBing(text: string, from: string, to: string) : Pr
                 includeSentenceLength: 'true',
             },
             body: { type: 'Json', payload: [{ Text: text }] },
-        });
-
+        }
+        console.log(data);
+        let res = await fetch(url,data );
+        console.log(await res.text());
         if (res.ok) {
-            let result = res.data;
+            let result = await res.json();
             if (result[0].translations) {
                 return result[0].translations[0].text.trim();
             } else {
@@ -331,7 +440,7 @@ export async function translateVoice(text: string, to: string, options = {}) {
     });
 
     if (res.ok) {
-        let result = res.data;
+        let result = await res.json();
         // 整理翻译结果并返回
         let translations = '';
         let { TranslationList } = result;
@@ -375,6 +484,7 @@ export async function translateYandex(text: string, from: string, to: string) : 
             "text": text,
         },
     });
+    console.log(await res.text());
     if (res.ok) {
         const result = await res.json();
         if (result.text) {
@@ -387,7 +497,7 @@ export async function translateYandex(text: string, from: string, to: string) : 
     }
 }
 
-export async function tts(text: string, lang: string, options = {}) {
+export async function tts(text: string, lang: string, options = {}): Promise<any[]> {
     const { config }  = options;
 
     let lingvaConfig = { requestPath: 'lingva.pot-app.com' };
@@ -401,9 +511,15 @@ export async function tts(text: string, lang: string, options = {}) {
         requestPath = 'https://' + requestPath;
     }
     const res = await fetch(`${requestPath}/api/v1/audio/${lang}/${encodeURIComponent(text)}`);
-
+    console.log(res.status);
+    if (res.status !== 200) {
+        throw new Error(`Error ${res.status}: ${res.statusText}`);
+    }
+    let resault = await res.json();
+    let re = resault['audio'] as any[]
+    console.log(re);
+    return re;
     if (res.ok) {
-        let resault = await res.json();
-        return resault['audio'];
+        
     }
 }

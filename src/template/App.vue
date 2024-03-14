@@ -1,16 +1,8 @@
 <script setup lang="ts">
-import { doRegister } from "../shortcut/global"
-import { ref, onMounted } from "vue";
 // import Main from "./views/Main.vue";
 // import Index from "./components/Index.vue";
 // import SongList from "./components/SongList.vue";
 // import Music from "./views/Music.vue";
-
-onMounted(() => {
-
-    doRegister()
-})
-
 </script>
 
 <template>
@@ -19,4 +11,6 @@ onMounted(() => {
     <RouterView />
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
