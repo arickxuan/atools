@@ -132,24 +132,24 @@ async fn main() {
             // )
             // .build()?;
 
-            let main_window = app.get_window("main").unwrap();
-            let id = main_window.listen("plugin:clipboard://clipboard-monitor/update", |event| {
-                // clipboard::listen_clipboard(&app.handle());
-                // println!("got global event-name with payload {:?}", event.payload());
-            });
+            // let main_window = app.get_window("main").unwrap();
+            // let id = main_window.listen("plugin:clipboard://clipboard-monitor/update", |event| {
+            //     // clipboard::listen_clipboard(&app.handle());
+            //     // println!("got global event-name with payload {:?}", event.payload());
+            // });
             // unlisten to the event using the `id` returned on the `listen_global` function
             // a `once_global` API is also exposed on the `App` struct
             // app.unlisten(id);
 
-            let main_window = app.get_window("main").unwrap();
-            main_window.show();
+            // let main_window = app.get_window("main").unwrap();
+            // main_window.show();
 
             // listen to the `event-name` (emitted on the `main` window)
-            let id2 = main_window.listen("event-name2", |event| {
-                println!("got window event-name with payload {:?}", event.payload());
-            });
+            // let id2 = main_window.listen("event-name2", |event| {
+            //     println!("got window event-name with payload {:?}", event.payload());
+            // });
 
-            app.unlisten(id);
+            // app.unlisten(id);
             let handle = app.handle();
 
             // let res = dir::app_resources_dir(app.package_info());

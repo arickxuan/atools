@@ -1,6 +1,117 @@
-import { fetch,Body } from '@tauri-apps/api/http';
+//@ts-ignore
+// import { fetch } from '@tauri-apps/plugin-http';
+import { Body,fetch } from "@tauri-apps/api/http"
+//@ts-ignore
+// import { Body } from '@tauri-apps/plugin-http';
 import CryptoJS from 'crypto-js';
 import { v4 as uuidv4 } from 'uuid';
+
+
+export async function baidu_detect(text) {
+    const lang_map = {
+        zh: 'zh_cn',
+        cht: 'zh_tw',
+        en: 'en',
+        jp: 'ja',
+        kor: 'ko',
+        fra: 'fr',
+        spa: 'es',
+        ru: 'ru',
+        de: 'de',
+        it: 'it',
+        tr: 'tr',
+        pt: 'pt_pt',
+        vie: 'vi',
+        id: 'id',
+        th: 'th',
+        may: 'ms',
+        ar: 'ar',
+        hi: 'hi',
+        nob: 'nb_no',
+        nno: 'nn_no',
+        per: 'fa',
+    };
+    let res = await fetch('https://fanyi.baidu.com/langdetect', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body:Body.form( {
+            query: text,
+        }),
+    });
+    if (res.ok) {
+        let result = await res.json();
+        if (result.lan && result.lan in lang_map) {
+            return lang_map[result.lan];
+        }
+    }
+    return 'en';
+}
+
+export async function translateGoogleProxy(text, from, to, options = {}) {
+    const { config }  = options;
+
+    let lingvaConfig = { requestPath: 'lingva.pot-app.com' };
+
+    if (config !== undefined) {
+        lingvaConfig = config;
+    }
+
+    let { requestPath } = lingvaConfig;
+    if (!requestPath.startsWith('http')) {
+        requestPath = 'https://' + requestPath;
+    }
+    let url = `${requestPath}/api/v1/${from}/${to}/${text}`
+    console.log(url);
+    const res = await fetch(url);
+    console.log(res.status);
+    if (res.status !== 200) {
+        throw new Error(`Error ${res.status}: ${res.statusText}`);
+    }
+    let resault = res.data;
+    console.log(resault);
+    let re = resault['translation']
+    console.log(re);
+    return re;
+    if (res.ok) {
+        
+    }
+}
+
+// /api/translate?source=auto&target=zh&sourceText=How%20are%20you&platform=WeChat_APP&guid=oqdgX0SIwhvM0TmqzTHghWBvfk22&candidateLangs=en%7Czh
+export async function translateTencentProxy(text, from, to, options = {}) {
+    const { config }  = options;
+
+    let lingvaConfig = { requestPath: 'wxapp.translator.qq.com' };
+
+    if (config !== undefined) {
+        lingvaConfig = config;
+    }
+
+    let { requestPath } = lingvaConfig;
+    if (!requestPath.startsWith('http')) {
+        requestPath = 'https://' + requestPath;
+    }
+    text = encodeURIComponent(text); 
+    let url = `${requestPath}/api/translate?source=auto&target=auto&sourceText=${text}&platform=WeChat_APP&guid=oqdgX0SIwhvM0TmqzTHghWBvfk22&candidateLangs=en|zh`
+    console.log(url);
+    const res = await fetch(url,{
+        method: 'GET'});
+    console.log(res.status);
+    if (res.status !== 200) {
+        throw new Error(`Error ${res.status}: ${res.statusText}`);
+    }
+    let resault = res.data;
+    console.log(resault);
+    let re = resault['targetText']
+    console.log(re);
+    return re;
+    if (res.ok) {
+        
+    }
+}
+
 
 export const info = {
     name: 'cambridge_dict',

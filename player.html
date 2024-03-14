@@ -1,25 +1,26 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>player</title>
 </head>
+
 <body>
 
     <video-js id=vid1 width=600 height=300 class="vjs-default-skin" controls>
-        <source
-           src="https://vip.ffzyread1.com/20240310/25093_9d35f047/index.m3u8"
-           type="application/x-mpegURL">
-      </video-js>
-      <!-- "core" version of Video.js -->
-      <script src="dist/assets/video.js"></script>
-      <script src="dist/assets/hls.js"></script>
-      <script>
-      var player = videojs('vid1');
-      player.play();
-      </script>
+        <source src="https://vip.ffzyread1.com/20240310/25093_9d35f047/index.m3u8" type="application/x-mpegURL">
+    </video-js>
+    <!-- "core" version of Video.js -->
+    <script src="dist/assets/video.js"></script>
+    <script src="dist/assets/hls.js"></script>
+    <script>
+        var player = videojs('vid1');
+        player.play();
+    </script>
 </body>
+
 </html>

@@ -96,10 +96,11 @@
     },
     "windows": [
       {
-        "url": "index.html",
+        "url": "amusic.html",
+        "label": "amusic",
         "fullscreen": false,
         "resizable": true,
-        "title": "main",
+        "title": "amusic",
         "width": 800,
         "height": 600,
         "alwaysOnTop": false

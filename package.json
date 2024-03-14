@@ -27,6 +27,7 @@
     "uuid": "^9.0.1",
     "video.js": "^8.11.7",
     "vue": "^3.3.4",
+    "vue-debounce": "^5.0.0",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {

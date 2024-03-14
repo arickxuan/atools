@@ -116,8 +116,8 @@ pub fn handler(app: &AppHandle, event: SystemTrayEvent) {
                 local_window.show().expect("msg");
             }
 
-            "showTranslate" => {
-                if let Some(window) = app.get_window("translate") {
+            "showAmusic" => {
+                if let Some(window) = app.get_window("amusic") {
                     trace_err!(window.unminimize(), "set win unminimize");
                     trace_err!(window.show(), "set win visible");
                     trace_err!(window.set_focus(), "set win focus");
@@ -125,11 +125,26 @@ pub fn handler(app: &AppHandle, event: SystemTrayEvent) {
                 }
                 let local_window = tauri::WindowBuilder::new(
                     app,
-                    "translate",
-                    tauri::WindowUrl::App("translate.html".into()),
+                    "amusic",
+                    tauri::WindowUrl::App("amusic.html".into()),
                 )
                 .build()
                 .expect("msg");
+                let _ = local_window.set_title("amusic");
+                local_window.show().expect("msg");
+            }
+
+            "showTranslate" => {
+                if let Some(window) = app.get_window("pot") {
+                    trace_err!(window.unminimize(), "set win unminimize");
+                    trace_err!(window.show(), "set win visible");
+                    trace_err!(window.set_focus(), "set win focus");
+                    return;
+                }
+                let local_window =
+                    tauri::WindowBuilder::new(app, "pot", tauri::WindowUrl::App("pot.html".into()))
+                        .build()
+                        .expect("msg");
                 let _ = local_window.set_title("translate");
                 local_window.show().expect("msg");
             }
