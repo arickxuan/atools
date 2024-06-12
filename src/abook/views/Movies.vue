@@ -20,11 +20,28 @@ let dialogSourceVisible = ref(false)
 
 let baseUrl = 'http://cj.ffzyapi.com/api.php/provide/vod/?'
 // let baseUrl = 'https://api.1080zyku.com/inc/api_mac10.php?ac=list&'
-
+// https://github.com/dxawi/0/blob/main/0.json
 let sources = ref([
-  {name:"非非",url:'http://cj.ffzyapi.com/api.php/provide/vod/?'},
-  {name: "1080zyku", url: 'https://api.1080zyku.com/inc/api_mac10.php?'},
-  {name: "ikanju", url: 'https://www.ikanju.cc/api.php/provide/vod/'}
+  {name:"非凡2",api:'http://cj.ffzyapi.com/api.php/provide/vod/?'},
+  {name: "1080zyku", api: 'https://api.1080zyku.com/inc/api_mac10.php?'},
+  {name: "爱奇艺", api: 'https://ziyuan.skm3u8.com/app/provide/vod/?'},
+  {name: "墙 18+ ttzy ", api: 'https://apittzy.com/api.php/provide/vod/?'},
+  {name: "墙 18+ lyzy", api: 'https://api.apilyzy.com/api.php/provide/vod/?'},
+  {name: "墙 18+ aosikazy", api: 'https://aosikazy.com/api.php/provide/vod/?'},
+  {name: "墙 18+ 樱花", api: 'https://m3u8.apiyhzy.com/api.php/provide/vod/?'},
+  {name: "快车", api: 'https://caiji.kczyapi.com/api.php/provide/vod/?'},
+  {name: "无尽资源", api: 'https://api.wujinapi.me/api.php/provide/vod/?'},
+  {name: "卧龙资源", api: 'https://collect.wolongzy.cc/api.php/provide/vod/?'},
+  {name: "蓝光资源", api: 'https://bfzyapi.com/api.php/provide/vod/?'},
+  {name: "ikanju", api: 'https://www.ikanju.cc/api.php/provide/vod/?'},
+  {name:"小胡",api:'https://leshizyapi.com/api.php/provide/vod/?'},
+  { "name": "爱坤", "api": "https://ikunzyapi.com/api.php/provide/vod/?" },
+  { "name": "光速", "api": "https://api.guangsuapi.com/api.php/provide/?" },
+  { "name": "量子", "api": "https://cj.lziapi.com/api.php/provide/vod/?" },
+  { "name": "红牛", "api": "https://www.hongniuzy2.com/api.php/provide/vod/?" },
+  { "name": "飞速", "api": "https://m3u8.feisuzyapi.com/api.php/provide/vod/?" },
+  { "name": "天空", "api": "https://api.tiankongapi.com/api.php/provide/vod/?" },
+  { "name": "非凡", "api": "https://cj.ffzyapi.com/api.php/provide/vod/?" }
 ])
 
 let currentSource = ref(sources.value[0])
@@ -48,7 +65,7 @@ function toDetail(item) {
 
 async function getData() {
 
-  const response = await fetch(currentSource.value.url + 'ac=list', {
+  const response = await fetch(currentSource.value.api + 'ac=list', {
     method: 'GET',
     timeout: 30,
   });
@@ -70,7 +87,7 @@ async function getData() {
 
   const result = ids.join(','); // 使用逗号和空格连接数组元素
 
-  const response3 = await fetch(currentSource.value.url + 'ac=detail&ids=' + result, {
+  const response3 = await fetch(currentSource.value.api + 'ac=detail&ids=' + result, {
     method: 'GET',
     timeout: 30,
   });
@@ -89,7 +106,7 @@ function changeSource(item){
 
 async function doSearch() {
   console.log(search.value)
-  const response = await fetch(currentSource.value.url + 'ac=list&wd=' + search.value, {
+  const response = await fetch(currentSource.value.api + 'ac=list&wd=' + search.value, {
     method: 'GET',
     timeout: 30,
   });
@@ -98,7 +115,7 @@ async function doSearch() {
 
   const result = ids.join(','); // 使用逗号和空格连接数组元素
 
-  const response3 = await fetch(currentSource.value.url + 'ac=detail&ids=' + result, {
+  const response3 = await fetch(currentSource.value.api + 'ac=detail&ids=' + result, {
     method: 'GET',
     timeout: 30,
   });
@@ -107,7 +124,7 @@ async function doSearch() {
 
 async function changeCategory(tid) {
   console.log(tid)
-  const response = await fetch(currentSource.value.url + 'ac=list&t=' + tid + '&pg=' + page.value, {
+  const response = await fetch(currentSource.value.api + 'ac=list&t=' + tid + '&pg=' + page.value, {
     method: 'GET',
     timeout: 30,
   });
@@ -117,7 +134,7 @@ async function changeCategory(tid) {
 
   const result = ids.join(','); // 使用逗号和空格连接数组元素
 
-  const response3 = await fetch(currentSource.value.url + 'ac=detail&ids=' + result, {
+  const response3 = await fetch(currentSource.value.api + 'ac=detail&ids=' + result, {
     method: 'GET',
     timeout: 30,
   });
