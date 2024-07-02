@@ -78,10 +78,11 @@ fn build_window(label: &str, title: &str) -> (Window, bool) {
         }
         None => {
             info!("Window not existence, Creating new window: {}", label);
+            let url = label.to_string() + "";
             let mut builder = tauri::WindowBuilder::new(
                 app_handle,
                 label,
-                tauri::WindowUrl::App("index.html".into()),
+                tauri::WindowUrl::App(url.into()),
             )
             .position(position.x, position.y)
             .focused(true)
@@ -218,6 +219,67 @@ fn translate_window() -> Window {
     }
 
     window
+}
+
+fn paste_window() -> Window {
+    use mouse_position::mouse_position::{Mouse, Position};
+    // Mouse physical position
+    let mut mouse_position = match Mouse::get_mouse_position() {
+        Mouse::Position { x, y } => Position { x, y },
+        Mouse::Error => {
+            warn!("Mouse position not found, using (0, 0) as default");
+            Position { x: 0, y: 0 }
+        }
+    };
+    let (window, exists) = build_window("paste", "paste");
+    if exists {
+        return window;
+    }
+    window.set_skip_taskbar(true).unwrap();
+    // Get Translate Window Size
+    let width = match get("paste_window_width") {
+        Some(v) => v.as_i64().unwrap(),
+        None => {
+            set("paste_window_width", 350);
+            350
+        }
+    };
+    let height = match get("paste_window_height") {
+        Some(v) => v.as_i64().unwrap(),
+        None => {
+            set("paste_window_height", 420);
+            420
+        }
+    };
+
+    let monitor = window.current_monitor().unwrap().unwrap();
+    let dpi = monitor.scale_factor();
+
+    window
+        .set_size(tauri::PhysicalSize::new(
+            (width as f64) * dpi,
+            (height as f64) * dpi,
+        ))
+        .unwrap();
+
+
+
+    window
+}
+
+pub fn selection_paste() {
+    use selection::get_text;
+    // Get Selected Text
+    let text = get_text();
+    if !text.trim().is_empty() {
+        let app_handle = APP.get().unwrap();
+        // Write into State
+        let state: tauri::State<StringWrapper> = app_handle.state();
+        state.0.lock().unwrap().replace_range(.., &text);
+    }
+
+    let window = paste_window();
+    window.emit("new_text", text).unwrap();
 }
 
 pub fn selection_translate() {

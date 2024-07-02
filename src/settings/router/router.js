@@ -6,7 +6,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 // import Settings from "../views/Settings.vue";
 // import Music from "../views/Music.vue";
 import Main from "../views/Main.vue";
-import Test from "../views/Test.vue";
+// import Test from "../views/Test.vue";
 // import Upload from "../views/Upload.vue";
 // import BookList from "../views/BookList.vue";
 // 2. 定义一些路由

@@ -10,6 +10,8 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.608.0",
+    "@aws-sdk/s3-request-presigner": "^3.608.0",
     "@picgo/store": "^2.1.0",
     "@tauri-apps/api": "^1.5.2",
     "@videojs/http-streaming": "^3.11.3",

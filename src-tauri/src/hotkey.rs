@@ -1,5 +1,5 @@
 use crate::config::{get, set};
-use crate::window::{input_translate, ocr_recognize, ocr_translate, selection_translate};
+use crate::window::{input_translate, ocr_recognize, ocr_translate, selection_translate,selection_paste};
 use crate::APP;
 use log::{info, warn};
 use tauri::{AppHandle, GlobalShortcutManager};
@@ -74,10 +74,10 @@ pub fn register_shortcut(shortcut: &str) -> Result<(), String> {
 pub fn register_shortcut_by_frontend(name: &str, shortcut: &str) -> Result<(), String> {
     let app_handle = APP.get().unwrap();
     match name {
-        "hotkey_selection_translate" => register(
+        "hotkey_paste" => register(
             app_handle,
-            "hotkey_selection_translate",
-            selection_translate,
+            "hotkey_paste",
+            selection_paste,
             shortcut,
         )?,
         "hotkey_input_translate" => register(
@@ -95,4 +95,9 @@ pub fn register_shortcut_by_frontend(name: &str, shortcut: &str) -> Result<(), S
         _ => {}
     }
     Ok(())
+}
+
+#[tauri::command]
+pub fn greet(name: &str) -> String {
+    format!("Hello, {}! You've been greeted from Rust!", name)
 }

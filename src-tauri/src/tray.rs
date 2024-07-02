@@ -14,8 +14,10 @@ pub fn menu() -> SystemTray {
     let restart = CustomMenuItem::new("restart".to_string(), "重启应用");
 
     let showbook = CustomMenuItem::new("showbook".to_string(), "打开abook");
+    let showPaste = CustomMenuItem::new("showPaste".to_string(), "打开剪切板");
     let showAria2 = CustomMenuItem::new("showAria2".to_string(), "打开下载");
     let showTranslate = CustomMenuItem::new("showTranslate".to_string(), "打开翻译");
+    let showSettings = CustomMenuItem::new("showSettings".to_string(), "打开设置");
 
     let tray_menu = SystemTrayMenu::new()
         .add_submenu(SystemTraySubmenu::new(
@@ -26,8 +28,10 @@ pub fn menu() -> SystemTray {
         ))
         .add_native_item(SystemTrayMenuItem::Separator)
         .add_item(showbook)
+        .add_item(showPaste)
         .add_item(showAria2)
         .add_item(showTranslate)
+        .add_item(showSettings)
         .add_native_item(SystemTrayMenuItem::Separator)
         .add_item(show)
         .add_item(hide)
@@ -116,6 +120,24 @@ pub fn handler(app: &AppHandle, event: SystemTrayEvent) {
                 local_window.show().expect("msg");
             }
 
+            "showPaste" => {
+                if let Some(window) = app.get_window("paste") {
+                    trace_err!(window.unminimize(), "set win unminimize");
+                    trace_err!(window.show(), "set win visible");
+                    trace_err!(window.set_focus(), "set win focus");
+                    return;
+                }
+                let local_window = tauri::WindowBuilder::new(
+                    app,
+                    "paste",
+                    tauri::WindowUrl::App("paste.html".into()),
+                )
+                .build()
+                .expect("msg");
+                let _ = local_window.set_title("paste");
+                local_window.show().expect("msg");
+            }
+
             "showAmusic" => {
                 if let Some(window) = app.get_window("amusic") {
                     trace_err!(window.unminimize(), "set win unminimize");
@@ -148,6 +170,22 @@ pub fn handler(app: &AppHandle, event: SystemTrayEvent) {
                 let _ = local_window.set_title("translate");
                 local_window.show().expect("msg");
             }
+
+            "showSettings" => {
+                if let Some(window) = app.get_window("settings") {
+                    trace_err!(window.unminimize(), "set win unminimize");
+                    trace_err!(window.show(), "set win visible");
+                    trace_err!(window.set_focus(), "set win focus");
+                    return;
+                }
+                let local_window =
+                    tauri::WindowBuilder::new(app, "settings", tauri::WindowUrl::App("setting.html".into()))
+                        .build()
+                        .expect("msg");
+                let _ = local_window.set_title("设置");
+                local_window.show().expect("msg");
+            }
+
 
             "showbook" => {
                 if let Some(window) = app.get_window("abook") {

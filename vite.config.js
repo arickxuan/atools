@@ -35,7 +35,7 @@ export default defineConfig(async () => ({
   resolve: {
     // 配置路径别名
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@/': fileURLToPath(new URL('./src/', import.meta.url)),
       "assets": "./src/assets",
       "components": "./src/components",
       "views": "./src/views",

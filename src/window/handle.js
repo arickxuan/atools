@@ -5,11 +5,13 @@ import {  WebviewWindow,appWindow, getCurrent, getAll } from '@tauri-apps/api/wi
 
 export function getWebWindow(label ,options) {
     let web =  WebviewWindow.getByLabel(label)
-    if (web) {
-        return web
-    } else {
+    if (web == null) {
+        console.log("webview is null")
         let win = new WebviewWindow(label, options)
         return win
+    } else {
+        console.log("webview is not null")
+        return web
         
     }
 }

@@ -1,9 +1,20 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-#[macro_use]
-extern crate log;
-extern crate log4rs;
+mod aria;
+mod hotkey;
+mod clipboard;
+mod config;
+mod dir;
+mod fs;
+mod helper;
+mod log_init;
+mod ocr;
+mod screenshot;
+mod tray;
+mod window;
+
+
 
 use std::env;
 use std::string::String;
@@ -17,6 +28,10 @@ use tokio;
 use tokio::time;
 
 use once_cell::sync::OnceCell;
+
+#[macro_use]
+extern crate log;
+extern crate log4rs;
 
 pub static APP: OnceCell<tauri::AppHandle> = OnceCell::new();
 // Text to be translated
@@ -41,18 +56,7 @@ fn query_accessibility_permissions() -> bool {
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
-mod aria;
-mod clipboard;
-mod config;
-mod dir;
-mod fs;
-mod helper;
-mod hotkey;
-mod log_init;
-mod ocr;
-mod screenshot;
-mod tray;
-mod window;
+
 
 async fn print_tools() {
     let mut interval = time::interval(time::Duration::from_secs(1));
@@ -106,7 +110,7 @@ fn init_process(window: Window) {
 
 #[tokio::main]
 async fn main() {
-    tokio::spawn(print_tools());
+    //tokio::spawn(print_tools());
     // log_init::log4rs::init_file("log4rs.yaml", Default::default()).unwrap();
     // log_init::log_init();
     let context = tauri::generate_context!();
@@ -193,8 +197,9 @@ async fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            greet,
+            hotkey::greet,
             log_info,
+            hotkey::register_shortcut_by_frontend,
             // tray::creatWin,
             fs::my_read_file,
             fs::my_read_dir,
@@ -214,7 +219,4 @@ async fn main() {
     });
 }
 
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
+
